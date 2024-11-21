@@ -9,11 +9,10 @@ set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -g)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # 设置项目库文件的输出路径
-set(LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 # 设置项目编译头文件的搜索路径
-include_directories(${PROJECT_SOURCE_DIR}/src)
-include_directories(${PROJECT_SOURCE_DIR}/example)
+include_directories(${PROJECT_SOURCE_DIR}/src/include)
 
 # 设置项目编译库文件的搜索路径
 link_directories(${PROJECT_SOURCE_DIR}/lib)

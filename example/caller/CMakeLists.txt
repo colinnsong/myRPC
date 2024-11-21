@@ -2,7 +2,7 @@
 aux_source_directory(. SRC_LIST)
 
 # 生成可执行文件RpcServer, 以及指定需要编译的源文件列表
-add_executable(RpcServer ${SRC_LIST})
+add_executable(RpcCaller ${SRC_LIST})
 
 # 表示生成可执行文件需要链接的库文件
-target_link_libraries(RpcServer protobuf myrpc)
+target_link_libraries(RpcCaller protobuf myrpc)

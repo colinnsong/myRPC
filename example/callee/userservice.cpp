@@ -1,3 +1,5 @@
+#include "myrpc.hpp"
+#include "rpcprovider.hpp"
 #include "user.pb.h"
 #include <iostream>
 #include <string>
@@ -10,7 +12,7 @@ public:
     // 本地的Login方法
     bool Login(string name, string pwd) {
         cout << "name: " << name << endl;
-        cout << "pwd: " << pwd;
+        cout << "pwd: " << pwd << endl;
         return true;
     }
 
@@ -25,7 +27,7 @@ public:
         // 写入响应数据
         ResultCode *rc = response->mutable_result();
         rc->set_errcode(0);
-        rc->set_errmsg("");
+        rc->set_errmsg("no error");
         response->set_success(login_res);
 
         // 执行回调
@@ -33,6 +35,13 @@ public:
     }
 };
 
-int main() {
+int main(int argc, char **argv) {
+    // 框架的初始化
+    MyRpcApplication::getInstance()->Init(argc, argv);
+
+    RpcProvider provider;
+    provider.NotifyService(new UserService());
+    provider.Run();
+
     return 0;
 }
