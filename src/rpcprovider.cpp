@@ -1,4 +1,5 @@
 #include "rpcprovider.hpp"
+#include "logger.hpp"
 #include "myrpc.hpp"
 #include "rpcheader.pb.h"
 using namespace fixbug;
@@ -8,6 +9,7 @@ void RpcProvider::NotifyService(google::protobuf::Service *service) {
     const google::protobuf::ServiceDescriptor *serviceDesc = service->GetDescriptor();
     // 获取rpc服务对象的名字
     string serviceName = serviceDesc->name();
+    LOG_INFO("notify service %s", serviceName.c_str());
     // 获取rpc服务对象中rpc方法的数量
     int methodCnt = serviceDesc->method_count();
 
@@ -15,6 +17,7 @@ void RpcProvider::NotifyService(google::protobuf::Service *service) {
     for (int i = 0; i < methodCnt; i++) {
         const google::protobuf::MethodDescriptor *methodDesc = serviceDesc->method(i);
         string methodName = methodDesc->name();
+        LOG_INFO("notify method %s", methodName.c_str());
         _serviceMap[serviceName]._methodMap.insert({methodName, methodDesc});
     }
 }
@@ -62,8 +65,10 @@ void RpcProvider::OnMessage(const TcpConnectionPtr &conn, Buffer *buffer, Timest
     // 根据请求头长度获取请求头, 反序列化数据拿到service_name + method_name + args_size + args
     string header = buf.substr(4, header_size);
     RpcHeader rpcHeader;
-    if (!rpcHeader.ParseFromString(header))
+    if (!rpcHeader.ParseFromString(header)) {
+        LOG_ERROR("parse header error!");
         return;
+    }
     string service_name = rpcHeader.service_name();
     string method_name = rpcHeader.method_name();
     int32_t args_size = rpcHeader.args_size();
@@ -72,12 +77,12 @@ void RpcProvider::OnMessage(const TcpConnectionPtr &conn, Buffer *buffer, Timest
     // 根据service_name获取本机服务对象的所有信息
     auto it = _serviceMap.find(service_name);
     if (it == _serviceMap.end()) {
-        cout << service_name << "is not exist!" << endl;
+        LOG_ERROR("service %s is not exist!", service_name.c_str());
         return;
     }
     auto mit = it->second._methodMap.find(method_name);
     if (mit == it->second._methodMap.end()) {
-        cout << service_name << ":" << method_name << "is not exist!" << endl;
+        LOG_ERROR("method %s:%s is not exist!", service_name.c_str(), method_name.c_str());
         return;
     }
     google::protobuf::Service *service = it->second._service;
@@ -85,19 +90,24 @@ void RpcProvider::OnMessage(const TcpConnectionPtr &conn, Buffer *buffer, Timest
 
     // 生成请求方法的request和response
     google::protobuf::Message *request = service->GetRequestPrototype(method).New();
-    if (!request->ParseFromString(request_str))
+    if (!request->ParseFromString(request_str)) {
+        LOG_ERROR("parse request error!");
         return;
+    }
     google::protobuf::Message *response = service->GetResponsePrototype(method).New();
 
     // 在框架上调用rpc方法
     auto done = google::protobuf::NewCallback<RpcProvider, const muduo::net::TcpConnectionPtr &, google::protobuf::Message *>(this, &RpcProvider::OnRpcResponse, conn, response);
     service->CallMethod(method, nullptr, request, response, done);
+    LOG_INFO("run rpc method %s and returned...", method_name.c_str());
 }
 
 void RpcProvider::OnRpcResponse(const TcpConnectionPtr &conn, google::protobuf::Message *response) {
     string response_str = "";
-    if (!response->SerializePartialToString(&response_str))
+    if (!response->SerializePartialToString(&response_str)) {
+        LOG_ERROR("serialize response error!");
         return;
+    }
     conn->send(response_str);
-    conn->shutdown(); // 模拟http短链接, 有rpc服务提供方断开连接
+    conn->shutdown(); // 模拟http短链接, 由rpc服务提供方断开连接
 }
