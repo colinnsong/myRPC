@@ -1,6 +1,7 @@
 #pragma once
 #include "rpcconfig.hpp"
 #include "rpccontroller.hpp"
+#include "zookeeper.hpp"
 #include <iostream>
 #include <string>
 #include <unistd.h>

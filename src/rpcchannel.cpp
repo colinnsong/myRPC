@@ -57,9 +57,28 @@ void MyRpcChannel::CallMethod(const google::protobuf::MethodDescriptor *method,
         controller->SetFailed(error);
         return;
     }
+    // 这里我们直接指定了rpc服务节点的ip和port, 实际上应该使用zookeeper去管理服务和节点信息
+    // string ip = MyRpcApplication::getInstance()->GetConfig().Load("rpcserverip");
+    // uint16_t port = atoi(MyRpcApplication::getInstance()->GetConfig().Load("rpcserverport").c_str());
+
+    // 连接并查询zookeeper中目标rpc方法所在节点的信息
+    ZkClient zkclient;
+    zkclient.Start();
+    string method_path = "/" + service_name + "/" + method_name;
+    std::string data = zkclient.GetData(method_path.c_str());
+    if (data == "") {
+        controller->SetFailed(method_path + " is not exist!");
+        return;
+    }
+    int idx = data.find(":");
+    if (idx == string::npos) {
+        controller->SetFailed(method_path + " address is invalid!");
+        return;
+    }
+    std::string ip = data.substr(0, idx);
+    uint16_t port = atoi(data.substr(idx + 1, data.size() - idx).c_str());
+
     sockaddr_in server;
-    string ip = MyRpcApplication::getInstance()->GetConfig().Load("rpcserverip");
-    uint16_t port = atoi(MyRpcApplication::getInstance()->GetConfig().Load("rpcserverport").c_str());
     server.sin_family = AF_INET;
     server.sin_port = htons(port);
     server.sin_addr.s_addr = inet_addr(ip.c_str());
@@ -96,4 +115,6 @@ void MyRpcChannel::CallMethod(const google::protobuf::MethodDescriptor *method,
         controller->SetFailed("parse response error!");
         return;
     }
+
+    close(clientfd);
 }

@@ -34,6 +34,25 @@ void RpcProvider::Run() {
     _server.setMessageCallback(bind(&RpcProvider::OnMessage, this, _1, _2, _3));
     // 设置线程数量: 1个I/O线程, 3个工作线程
     _server.setThreadNum(4);
+
+    // 连接zookeeper并将rpc方法所在的节点信息注册到zookeeper上, 实现rpc服务发现
+    ZkClient zkclient;
+    zkclient.Start();
+    for (auto &sp : _serviceMap) {
+        // 注册名为"/service_name"的节点
+        string service_path = "/" + sp.first;
+        zkclient.Create(service_path.c_str(), nullptr, 0, 0);
+        for (auto &mp : sp.second._methodMap) {
+            // 注册名为"/service_name/method_name"的节点, 其数据为rpc服务所在的主机ip+port
+            string method_path = service_path + "/" + mp.first;
+            char data[128];
+            sprintf(data, "%s:%d", ip.c_str(), port);
+            // ZOO_EPHEMERAL表示znode是一个临时性的节点
+            zkclient.Create(method_path.c_str(), data, strlen(data), ZOO_EPHEMERAL);
+        }
+    }
+    LOG_INFO("rpcserver start service at %s:%d", ip.c_str(), port);
+
     // 启动服务监听
     _server.start();
     // epoll_wait()
