@@ -109,8 +109,11 @@ void MyRpcChannel::CallMethod(const google::protobuf::MethodDescriptor *method,
     }
 
     // 反序列化并构造response对象
-    string response_str(buffer, 0, recv_size);
-    if (!response->ParseFromString(response_str)) {
+    // 从字符数组初始化成string可能会出现'\0'截断而造成字符串反序列化失败
+    // 由于muduo网络库可以正确地将字符数组初始化成string, 故框架的服务端直接使用ParseFromString即可
+    // string response_str(buffer, 0, recv_size);
+    // if (!response->ParseFromString(response_str))
+    if (!response->ParseFromArray(buffer, recv_size)) {
         close(clientfd);
         controller->SetFailed("parse response error!");
         return;
