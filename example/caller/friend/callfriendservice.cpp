@@ -1,5 +1,5 @@
-#include "friend.pb.h"
 #include "myrpc.hpp"
+#include "rpc.pb.h"
 #include "rpcchannel.hpp"
 #include <iostream>
 #include <string>

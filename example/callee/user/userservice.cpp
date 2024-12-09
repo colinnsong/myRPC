@@ -1,6 +1,7 @@
 #include "myrpc.hpp"
+#include "rpc.pb.h"
+#include "rpcchannel.hpp"
 #include "rpcprovider.hpp"
-#include "user.pb.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -24,11 +25,26 @@ public:
         string pwd = request->pwd();
         bool login_res = Login(name, pwd);
 
+        // 请求执行远程的rpc方法
+        GetFriendListRequest friend_request;
+        friend_request.set_userid(0);
+        GetFriendListResponse friend_response;
+
+        FriendServiceRpc_Stub stub(new MyRpcChannel());
+        RpcController friend_controller;
+        stub.GetFriendList(&friend_controller, &friend_request, &friend_response, nullptr);
+
         // 写入响应数据
         ResultCode *rc = response->mutable_result();
         rc->set_errcode(0);
         rc->set_errmsg("no error");
         response->set_success(login_res);
+
+        int size = friend_response.friends_size();
+        for (int i = 0; i < size; ++i) {
+            string *str = response->add_friends();
+            *str = friend_response.friends(i);
+        }
 
         // 执行回调
         done->Run();

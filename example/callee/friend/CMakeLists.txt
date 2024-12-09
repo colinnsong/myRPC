@@ -1,6 +1,6 @@
 # 将指定路径下的所有源文件加入到需要编译的源文件列表
 # aux_source_directory(. SRC_LIST)
-set(SRC_LIST friendservice.cpp ../../friend.pb.cc)
+set(SRC_LIST friendservice.cpp ../../rpc.pb.cc)
 
 # 生成可执行文件server, 以及指定需要编译的源文件列表
 add_executable(friend ${SRC_LIST})

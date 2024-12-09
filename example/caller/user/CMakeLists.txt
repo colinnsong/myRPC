@@ -1,6 +1,6 @@
 # 将指定路径下的所有源文件加入到需要编译的源文件列表
 # aux_source_directory(. SRC_LIST)
-set(SRC_LIST calluserservice.cpp ../../user.pb.cc)
+set(SRC_LIST calluserservice.cpp ../../rpc.pb.cc)
 
 # 生成可执行文件caller, 以及指定需要编译的源文件列表
 add_executable(usercaller ${SRC_LIST})
