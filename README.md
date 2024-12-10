@@ -21,7 +21,7 @@
 * `protobuf(version=3.20)`
 * `muduo`
 
-### 框架代码拉取和编译
+### 项目编译
 ```
 git clone https://github.com/colinnsong/myrpc.git
 cd myrpc  
@@ -30,7 +30,14 @@ cd build
 cmake ..  
 make  
 ```
-框架的库文件libmyrpc.a生成在lib文件夹下
+
+### 项目目录结构
+* `include/:` 框架头文件
+* `src/:` 框架源文件
+* `lib/:` 编译生成的框架静态库文件
+* `example/:` 框架使用演示代码文件
+* `bin/:` 演示代码编译的可执行文件
+* `log/:` 使用框架产生的日志文件
 
 ### 框架使用示例
 
@@ -100,4 +107,4 @@ cd ../bin
 ![rpc服务启动](./images/调用端运行图.png)
 ![rpc服务日志](./images/日志2.png)
 
-从运行终端打印、日志可以看出调用方已经通过框架连接到了zookeeper拿到服务节点的ip和port并调用了远程的rpc方法并正确返回
+从运行终端、日志可以看出调用方已经通过框架连接到了zookeeper拿到服务节点的ip和port并调用了远程的rpc方法且正确返回
