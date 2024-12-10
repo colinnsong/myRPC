@@ -2,6 +2,7 @@
 #include "rpc.pb.h"
 #include "rpcchannel.hpp"
 #include "rpcprovider.hpp"
+#include "useropr.hpp"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -11,19 +12,48 @@ using namespace fixbug;
 class UserService : public UserServiceRpc {
 public:
     // 本地的Login方法
-    bool Login(string name, string pwd) {
-        cout << "name: " << name << endl;
-        cout << "pwd: " << pwd << endl;
-        return true;
+    void Login(int id, string pwd, ::fixbug::LoginResponse *response) {
+        // 写入响应数据(登录结果)
+        ResultCode *rc = response->mutable_result();
+        // 查询数据库
+        UserOpr _useropr;
+        User user = _useropr.query(id);
+        if (user.getId() != -1 && user.getPassword() == pwd) {
+            if (user.getState() == "online") {
+                // 重复登录
+                rc->set_errcode(1);
+                rc->set_errmsg("请勿重复登录");
+                return;
+            } else {
+                // 登录成功, 更新用户的状态
+                user.setState("online");
+                _useropr.updateState(user);
+                rc->set_errcode(0);
+                rc->set_errmsg("登录成功");
+                return;
+            }
+        } else {
+            if (user.getId() == -1) {
+                // 用户名不存在
+                rc->set_errcode(1);
+                rc->set_errmsg("用户不存在");
+                return;
+            } else {
+                // 密码错误
+                rc->set_errcode(1);
+                rc->set_errmsg("密码错误");
+                return;
+            }
+        }
     }
 
     // 重写父类UserServiceRpc的Login方法
     void Login(::google::protobuf::RpcController *controller, const ::fixbug::LoginRequest *request,
                ::fixbug::LoginResponse *response, ::google::protobuf::Closure *done) {
         // 获取框架上报的请求参数执行本地业务
-        string name = request->name();
-        string pwd = request->pwd();
-        bool login_res = Login(name, pwd);
+        int id = request->userid();
+        string pwd = request->password();
+        Login(id, pwd, response);
 
         // 请求执行远程的rpc方法
         GetFriendListRequest friend_request;
@@ -34,12 +64,7 @@ public:
         RpcController friend_controller;
         stub.GetFriendList(&friend_controller, &friend_request, &friend_response, nullptr);
 
-        // 写入响应数据
-        ResultCode *rc = response->mutable_result();
-        rc->set_errcode(0);
-        rc->set_errmsg("no error");
-        response->set_success(login_res);
-
+        // 写入响应数据(好友列表)
         int size = friend_response.friends_size();
         for (int i = 0; i < size; ++i) {
             string *str = response->add_friends();

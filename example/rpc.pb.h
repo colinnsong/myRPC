@@ -335,39 +335,32 @@ class LoginRequest :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 1,
-    kPwdFieldNumber = 2,
+    kPasswordFieldNumber = 2,
+    kUseridFieldNumber = 1,
   };
-  // string name = 1;
-  void clear_name();
-  const std::string& name() const;
-  void set_name(const std::string& value);
-  void set_name(std::string&& value);
-  void set_name(const char* value);
-  void set_name(const char* value, size_t size);
-  std::string* mutable_name();
-  std::string* release_name();
-  void set_allocated_name(std::string* name);
+  // string password = 2;
+  void clear_password();
+  const std::string& password() const;
+  void set_password(const std::string& value);
+  void set_password(std::string&& value);
+  void set_password(const char* value);
+  void set_password(const char* value, size_t size);
+  std::string* mutable_password();
+  std::string* release_password();
+  void set_allocated_password(std::string* password);
   private:
-  const std::string& _internal_name() const;
-  void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
+  const std::string& _internal_password() const;
+  void _internal_set_password(const std::string& value);
+  std::string* _internal_mutable_password();
   public:
 
-  // string pwd = 2;
-  void clear_pwd();
-  const std::string& pwd() const;
-  void set_pwd(const std::string& value);
-  void set_pwd(std::string&& value);
-  void set_pwd(const char* value);
-  void set_pwd(const char* value, size_t size);
-  std::string* mutable_pwd();
-  std::string* release_pwd();
-  void set_allocated_pwd(std::string* pwd);
+  // int32 userid = 1;
+  void clear_userid();
+  ::PROTOBUF_NAMESPACE_ID::int32 userid() const;
+  void set_userid(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  const std::string& _internal_pwd() const;
-  void _internal_set_pwd(const std::string& value);
-  std::string* _internal_mutable_pwd();
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_userid() const;
+  void _internal_set_userid(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
   // @@protoc_insertion_point(class_scope:fixbug.LoginRequest)
@@ -375,8 +368,8 @@ class LoginRequest :
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr pwd_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr password_;
+  ::PROTOBUF_NAMESPACE_ID::int32 userid_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_2eproto;
 };
@@ -488,11 +481,10 @@ class LoginResponse :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kFriendsFieldNumber = 3,
+    kFriendsFieldNumber = 2,
     kResultFieldNumber = 1,
-    kSuccessFieldNumber = 2,
   };
-  // repeated bytes friends = 3;
+  // repeated bytes friends = 2;
   int friends_size() const;
   private:
   int _internal_friends_size() const;
@@ -531,15 +523,6 @@ class LoginResponse :
   ::fixbug::ResultCode* _internal_mutable_result();
   public:
 
-  // bool success = 2;
-  void clear_success();
-  bool success() const;
-  void set_success(bool value);
-  private:
-  bool _internal_success() const;
-  void _internal_set_success(bool value);
-  public:
-
   // @@protoc_insertion_point(class_scope:fixbug.LoginResponse)
  private:
   class _Internal;
@@ -547,7 +530,6 @@ class LoginResponse :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> friends_;
   ::fixbug::ResultCode* result_;
-  bool success_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_2eproto;
 };
@@ -1052,124 +1034,84 @@ inline void ResultCode::set_allocated_errmsg(std::string* errmsg) {
 
 // LoginRequest
 
-// string name = 1;
-inline void LoginRequest::clear_name() {
-  name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+// int32 userid = 1;
+inline void LoginRequest::clear_userid() {
+  userid_ = 0;
 }
-inline const std::string& LoginRequest::name() const {
-  // @@protoc_insertion_point(field_get:fixbug.LoginRequest.name)
-  return _internal_name();
+inline ::PROTOBUF_NAMESPACE_ID::int32 LoginRequest::_internal_userid() const {
+  return userid_;
 }
-inline void LoginRequest::set_name(const std::string& value) {
-  _internal_set_name(value);
-  // @@protoc_insertion_point(field_set:fixbug.LoginRequest.name)
+inline ::PROTOBUF_NAMESPACE_ID::int32 LoginRequest::userid() const {
+  // @@protoc_insertion_point(field_get:fixbug.LoginRequest.userid)
+  return _internal_userid();
 }
-inline std::string* LoginRequest::mutable_name() {
-  // @@protoc_insertion_point(field_mutable:fixbug.LoginRequest.name)
-  return _internal_mutable_name();
-}
-inline const std::string& LoginRequest::_internal_name() const {
-  return name_.GetNoArena();
-}
-inline void LoginRequest::_internal_set_name(const std::string& value) {
+inline void LoginRequest::_internal_set_userid(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  userid_ = value;
 }
-inline void LoginRequest::set_name(std::string&& value) {
-  
-  name_.SetNoArena(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:fixbug.LoginRequest.name)
-}
-inline void LoginRequest::set_name(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:fixbug.LoginRequest.name)
-}
-inline void LoginRequest::set_name(const char* value, size_t size) {
-  
-  name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:fixbug.LoginRequest.name)
-}
-inline std::string* LoginRequest::_internal_mutable_name() {
-  
-  return name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline std::string* LoginRequest::release_name() {
-  // @@protoc_insertion_point(field_release:fixbug.LoginRequest.name)
-  
-  return name_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline void LoginRequest::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
-    
-  } else {
-    
-  }
-  name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:fixbug.LoginRequest.name)
+inline void LoginRequest::set_userid(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_userid(value);
+  // @@protoc_insertion_point(field_set:fixbug.LoginRequest.userid)
 }
 
-// string pwd = 2;
-inline void LoginRequest::clear_pwd() {
-  pwd_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+// string password = 2;
+inline void LoginRequest::clear_password() {
+  password_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline const std::string& LoginRequest::pwd() const {
-  // @@protoc_insertion_point(field_get:fixbug.LoginRequest.pwd)
-  return _internal_pwd();
+inline const std::string& LoginRequest::password() const {
+  // @@protoc_insertion_point(field_get:fixbug.LoginRequest.password)
+  return _internal_password();
 }
-inline void LoginRequest::set_pwd(const std::string& value) {
-  _internal_set_pwd(value);
-  // @@protoc_insertion_point(field_set:fixbug.LoginRequest.pwd)
+inline void LoginRequest::set_password(const std::string& value) {
+  _internal_set_password(value);
+  // @@protoc_insertion_point(field_set:fixbug.LoginRequest.password)
 }
-inline std::string* LoginRequest::mutable_pwd() {
-  // @@protoc_insertion_point(field_mutable:fixbug.LoginRequest.pwd)
-  return _internal_mutable_pwd();
+inline std::string* LoginRequest::mutable_password() {
+  // @@protoc_insertion_point(field_mutable:fixbug.LoginRequest.password)
+  return _internal_mutable_password();
 }
-inline const std::string& LoginRequest::_internal_pwd() const {
-  return pwd_.GetNoArena();
+inline const std::string& LoginRequest::_internal_password() const {
+  return password_.GetNoArena();
 }
-inline void LoginRequest::_internal_set_pwd(const std::string& value) {
+inline void LoginRequest::_internal_set_password(const std::string& value) {
   
-  pwd_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  password_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
-inline void LoginRequest::set_pwd(std::string&& value) {
+inline void LoginRequest::set_password(std::string&& value) {
   
-  pwd_.SetNoArena(
+  password_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:fixbug.LoginRequest.pwd)
+  // @@protoc_insertion_point(field_set_rvalue:fixbug.LoginRequest.password)
 }
-inline void LoginRequest::set_pwd(const char* value) {
+inline void LoginRequest::set_password(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   
-  pwd_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:fixbug.LoginRequest.pwd)
+  password_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:fixbug.LoginRequest.password)
 }
-inline void LoginRequest::set_pwd(const char* value, size_t size) {
+inline void LoginRequest::set_password(const char* value, size_t size) {
   
-  pwd_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+  password_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:fixbug.LoginRequest.pwd)
+  // @@protoc_insertion_point(field_set_pointer:fixbug.LoginRequest.password)
 }
-inline std::string* LoginRequest::_internal_mutable_pwd() {
+inline std::string* LoginRequest::_internal_mutable_password() {
   
-  return pwd_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  return password_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline std::string* LoginRequest::release_pwd() {
-  // @@protoc_insertion_point(field_release:fixbug.LoginRequest.pwd)
+inline std::string* LoginRequest::release_password() {
+  // @@protoc_insertion_point(field_release:fixbug.LoginRequest.password)
   
-  return pwd_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  return password_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline void LoginRequest::set_allocated_pwd(std::string* pwd) {
-  if (pwd != nullptr) {
+inline void LoginRequest::set_allocated_password(std::string* password) {
+  if (password != nullptr) {
     
   } else {
     
   }
-  pwd_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), pwd);
-  // @@protoc_insertion_point(field_set_allocated:fixbug.LoginRequest.pwd)
+  password_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), password);
+  // @@protoc_insertion_point(field_set_allocated:fixbug.LoginRequest.password)
 }
 
 // -------------------------------------------------------------------
@@ -1236,27 +1178,7 @@ inline void LoginResponse::set_allocated_result(::fixbug::ResultCode* result) {
   // @@protoc_insertion_point(field_set_allocated:fixbug.LoginResponse.result)
 }
 
-// bool success = 2;
-inline void LoginResponse::clear_success() {
-  success_ = false;
-}
-inline bool LoginResponse::_internal_success() const {
-  return success_;
-}
-inline bool LoginResponse::success() const {
-  // @@protoc_insertion_point(field_get:fixbug.LoginResponse.success)
-  return _internal_success();
-}
-inline void LoginResponse::_internal_set_success(bool value) {
-  
-  success_ = value;
-}
-inline void LoginResponse::set_success(bool value) {
-  _internal_set_success(value);
-  // @@protoc_insertion_point(field_set:fixbug.LoginResponse.success)
-}
-
-// repeated bytes friends = 3;
+// repeated bytes friends = 2;
 inline int LoginResponse::_internal_friends_size() const {
   return friends_.size();
 }
