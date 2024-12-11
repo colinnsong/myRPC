@@ -11,6 +11,19 @@ using namespace fixbug;
 // RPC服务的发布端(RPC服务的提供者)业务类
 class UserService : public UserServiceRpc {
 public:
+    // 重写父类UserServiceRpc的Login方法
+    void Login(::google::protobuf::RpcController *controller, const ::fixbug::LoginRequest *request,
+               ::fixbug::LoginResponse *response, ::google::protobuf::Closure *done) {
+        // 获取框架上报的请求参数执行本地业务
+        int id = request->userid();
+        string pwd = request->password();
+        Login(id, pwd, response);
+
+        // 执行回调
+        done->Run();
+    }
+
+private:
     // 本地的Login方法
     void Login(int id, string pwd, ::fixbug::LoginResponse *response) {
         // 写入响应数据(登录结果)
@@ -30,6 +43,18 @@ public:
                 _useropr.updateState(user);
                 rc->set_errcode(0);
                 rc->set_errmsg("登录成功");
+
+                // 请求执行远程的rpc方法
+                GetFriendListRequest friend_request;
+                friend_request.set_userid(id);
+                GetFriendListResponse friend_response;
+
+                FriendServiceRpc_Stub stub(new MyRpcChannel());
+                RpcController friend_controller;
+                stub.GetFriendList(&friend_controller, &friend_request, &friend_response, nullptr);
+
+                GetFriendListResponse *res = response->mutable_getfriendlistresponse();
+                *res = friend_response;
                 return;
             }
         } else {
@@ -45,34 +70,6 @@ public:
                 return;
             }
         }
-    }
-
-    // 重写父类UserServiceRpc的Login方法
-    void Login(::google::protobuf::RpcController *controller, const ::fixbug::LoginRequest *request,
-               ::fixbug::LoginResponse *response, ::google::protobuf::Closure *done) {
-        // 获取框架上报的请求参数执行本地业务
-        int id = request->userid();
-        string pwd = request->password();
-        Login(id, pwd, response);
-
-        // 请求执行远程的rpc方法
-        GetFriendListRequest friend_request;
-        friend_request.set_userid(0);
-        GetFriendListResponse friend_response;
-
-        FriendServiceRpc_Stub stub(new MyRpcChannel());
-        RpcController friend_controller;
-        stub.GetFriendList(&friend_controller, &friend_request, &friend_response, nullptr);
-
-        // 写入响应数据(好友列表)
-        int size = friend_response.friends_size();
-        for (int i = 0; i < size; ++i) {
-            string *str = response->add_friends();
-            *str = friend_response.friends(i);
-        }
-
-        // 执行回调
-        done->Run();
     }
 };
 

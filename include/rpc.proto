@@ -16,7 +16,7 @@ message LoginRequest{
 
 message LoginResponse{
     ResultCode result = 1;
-    repeated bytes friends = 2;
+    GetFriendListResponse getfriendlistresponse = 2;
 }
 
 message GetFriendListRequest{

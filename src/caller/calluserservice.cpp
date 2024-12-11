@@ -28,9 +28,15 @@ int main(int argc, char **argv) {
     else {
         // 读取rpc请求的响应数据
         cout << response.result().errmsg() << endl;
-        int size = response.friends_size();
-        for (int i = 0; i < size; ++i) {
-            cout << "index:" << (i + 1) << " name:" << response.friends(i) << endl;
+        if (!response.result().errcode()) {
+            if (response.getfriendlistresponse().result().errcode())
+                cout << response.getfriendlistresponse().result().errmsg() << endl;
+            else {
+                int size = response.getfriendlistresponse().friends_size();
+                for (int i = 0; i < size; ++i) {
+                    cout << response.getfriendlistresponse().friends(i) << endl;
+                }
+            }
         }
     }
 

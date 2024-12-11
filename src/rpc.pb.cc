@@ -14,6 +14,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_rpc_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_GetFriendListResponse_rpc_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_rpc_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ResultCode_rpc_2eproto;
 namespace fixbug {
 class ResultCodeDefaultTypeInternal {
@@ -91,9 +92,10 @@ static void InitDefaultsscc_info_LoginResponse_rpc_2eproto() {
   ::fixbug::LoginResponse::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_LoginResponse_rpc_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_LoginResponse_rpc_2eproto}, {
-      &scc_info_ResultCode_rpc_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_LoginResponse_rpc_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_LoginResponse_rpc_2eproto}, {
+      &scc_info_ResultCode_rpc_2eproto.base,
+      &scc_info_GetFriendListResponse_rpc_2eproto.base,}};
 
 static void InitDefaultsscc_info_ResultCode_rpc_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -134,7 +136,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_rpc_2eproto::offsets[] PROTOBU
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::fixbug::LoginResponse, result_),
-  PROTOBUF_FIELD_OFFSET(::fixbug::LoginResponse, friends_),
+  PROTOBUF_FIELD_OFFSET(::fixbug::LoginResponse, getfriendlistresponse_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::fixbug::GetFriendListRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -168,17 +170,18 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_rpc_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\trpc.proto\022\006fixbug\"-\n\nResultCode\022\017\n\007err"
   "code\030\001 \001(\005\022\016\n\006errmsg\030\002 \001(\014\"0\n\014LoginReque"
-  "st\022\016\n\006userid\030\001 \001(\005\022\020\n\010password\030\002 \001(\t\"D\n\r"
+  "st\022\016\n\006userid\030\001 \001(\005\022\020\n\010password\030\002 \001(\t\"q\n\r"
   "LoginResponse\022\"\n\006result\030\001 \001(\0132\022.fixbug.R"
-  "esultCode\022\017\n\007friends\030\002 \003(\014\"&\n\024GetFriendL"
-  "istRequest\022\016\n\006userid\030\001 \001(\005\"L\n\025GetFriendL"
-  "istResponse\022\"\n\006result\030\001 \001(\0132\022.fixbug.Res"
-  "ultCode\022\017\n\007friends\030\002 \003(\0142F\n\016UserServiceR"
-  "pc\0224\n\005Login\022\024.fixbug.LoginRequest\032\025.fixb"
-  "ug.LoginResponse2`\n\020FriendServiceRpc\022L\n\r"
-  "GetFriendList\022\034.fixbug.GetFriendListRequ"
-  "est\032\035.fixbug.GetFriendListResponseB\003\200\001\001b"
-  "\006proto3"
+  "esultCode\022<\n\025getfriendlistresponse\030\002 \001(\013"
+  "2\035.fixbug.GetFriendListResponse\"&\n\024GetFr"
+  "iendListRequest\022\016\n\006userid\030\001 \001(\005\"L\n\025GetFr"
+  "iendListResponse\022\"\n\006result\030\001 \001(\0132\022.fixbu"
+  "g.ResultCode\022\017\n\007friends\030\002 \003(\0142F\n\016UserSer"
+  "viceRpc\0224\n\005Login\022\024.fixbug.LoginRequest\032\025"
+  ".fixbug.LoginResponse2`\n\020FriendServiceRp"
+  "c\022L\n\rGetFriendList\022\034.fixbug.GetFriendLis"
+  "tRequest\032\035.fixbug.GetFriendListResponseB"
+  "\003\200\001\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_rpc_2eproto_deps[1] = {
 };
@@ -192,7 +195,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_rpc
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_rpc_2eproto_once;
 static bool descriptor_table_rpc_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_rpc_2eproto = {
-  &descriptor_table_rpc_2eproto_initialized, descriptor_table_protodef_rpc_2eproto, "rpc.proto", 487,
+  &descriptor_table_rpc_2eproto_initialized, descriptor_table_protodef_rpc_2eproto, "rpc.proto", 532,
   &descriptor_table_rpc_2eproto_once, descriptor_table_rpc_2eproto_sccs, descriptor_table_rpc_2eproto_deps, 5, 0,
   schemas, file_default_instances, TableStruct_rpc_2eproto::offsets,
   file_level_metadata_rpc_2eproto, 5, file_level_enum_descriptors_rpc_2eproto, file_level_service_descriptors_rpc_2eproto,
@@ -654,15 +657,22 @@ void LoginRequest::InternalSwap(LoginRequest* other) {
 void LoginResponse::InitAsDefaultInstance() {
   ::fixbug::_LoginResponse_default_instance_._instance.get_mutable()->result_ = const_cast< ::fixbug::ResultCode*>(
       ::fixbug::ResultCode::internal_default_instance());
+  ::fixbug::_LoginResponse_default_instance_._instance.get_mutable()->getfriendlistresponse_ = const_cast< ::fixbug::GetFriendListResponse*>(
+      ::fixbug::GetFriendListResponse::internal_default_instance());
 }
 class LoginResponse::_Internal {
  public:
   static const ::fixbug::ResultCode& result(const LoginResponse* msg);
+  static const ::fixbug::GetFriendListResponse& getfriendlistresponse(const LoginResponse* msg);
 };
 
 const ::fixbug::ResultCode&
 LoginResponse::_Internal::result(const LoginResponse* msg) {
   return *msg->result_;
+}
+const ::fixbug::GetFriendListResponse&
+LoginResponse::_Internal::getfriendlistresponse(const LoginResponse* msg) {
+  return *msg->getfriendlistresponse_;
 }
 LoginResponse::LoginResponse()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
@@ -671,20 +681,26 @@ LoginResponse::LoginResponse()
 }
 LoginResponse::LoginResponse(const LoginResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr),
-      friends_(from.friends_) {
+      _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from._internal_has_result()) {
     result_ = new ::fixbug::ResultCode(*from.result_);
   } else {
     result_ = nullptr;
   }
+  if (from._internal_has_getfriendlistresponse()) {
+    getfriendlistresponse_ = new ::fixbug::GetFriendListResponse(*from.getfriendlistresponse_);
+  } else {
+    getfriendlistresponse_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:fixbug.LoginResponse)
 }
 
 void LoginResponse::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_LoginResponse_rpc_2eproto.base);
-  result_ = nullptr;
+  ::memset(&result_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&getfriendlistresponse_) -
+      reinterpret_cast<char*>(&result_)) + sizeof(getfriendlistresponse_));
 }
 
 LoginResponse::~LoginResponse() {
@@ -694,6 +710,7 @@ LoginResponse::~LoginResponse() {
 
 void LoginResponse::SharedDtor() {
   if (this != internal_default_instance()) delete result_;
+  if (this != internal_default_instance()) delete getfriendlistresponse_;
 }
 
 void LoginResponse::SetCachedSize(int size) const {
@@ -711,11 +728,14 @@ void LoginResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  friends_.Clear();
   if (GetArenaNoVirtual() == nullptr && result_ != nullptr) {
     delete result_;
   }
   result_ = nullptr;
+  if (GetArenaNoVirtual() == nullptr && getfriendlistresponse_ != nullptr) {
+    delete getfriendlistresponse_;
+  }
+  getfriendlistresponse_ = nullptr;
   _internal_metadata_.Clear();
 }
 
@@ -733,17 +753,11 @@ const char* LoginResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated bytes friends = 2;
+      // .fixbug.GetFriendListResponse getfriendlistresponse = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_friends();
-            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+          ptr = ctx->ParseMessage(_internal_mutable_getfriendlistresponse(), ptr);
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
       default: {
@@ -780,10 +794,12 @@ failure:
         1, _Internal::result(this), target, stream);
   }
 
-  // repeated bytes friends = 2;
-  for (int i = 0, n = this->_internal_friends_size(); i < n; i++) {
-    const auto& s = this->_internal_friends(i);
-    target = stream->WriteBytes(2, s, target);
+  // .fixbug.GetFriendListResponse getfriendlistresponse = 2;
+  if (this->has_getfriendlistresponse()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::getfriendlistresponse(this), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -802,19 +818,18 @@ size_t LoginResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated bytes friends = 2;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(friends_.size());
-  for (int i = 0, n = friends_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-      friends_.Get(i));
-  }
-
   // .fixbug.ResultCode result = 1;
   if (this->has_result()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *result_);
+  }
+
+  // .fixbug.GetFriendListResponse getfriendlistresponse = 2;
+  if (this->has_getfriendlistresponse()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *getfriendlistresponse_);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -848,9 +863,11 @@ void LoginResponse::MergeFrom(const LoginResponse& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  friends_.MergeFrom(from.friends_);
   if (from.has_result()) {
     _internal_mutable_result()->::fixbug::ResultCode::MergeFrom(from._internal_result());
+  }
+  if (from.has_getfriendlistresponse()) {
+    _internal_mutable_getfriendlistresponse()->::fixbug::GetFriendListResponse::MergeFrom(from._internal_getfriendlistresponse());
   }
 }
 
@@ -875,8 +892,8 @@ bool LoginResponse::IsInitialized() const {
 void LoginResponse::InternalSwap(LoginResponse* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  friends_.InternalSwap(&other->friends_);
   swap(result_, other->result_);
+  swap(getfriendlistresponse_, other->getfriendlistresponse_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata LoginResponse::GetMetadata() const {

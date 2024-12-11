@@ -1,6 +1,8 @@
+#include "friendopr.hpp"
 #include "myrpc.hpp"
 #include "rpc.pb.h"
 #include "rpcprovider.hpp"
+#include "useropr.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -13,33 +15,28 @@ public:
                        const ::fixbug::GetFriendListRequest *request,
                        ::fixbug::GetFriendListResponse *response,
                        ::google::protobuf::Closure *done) override {
-        int userid = request->userid();
-        vector<string> friends = GetFriendList(userid);
-
-        ResultCode *rc = response->mutable_result();
-        rc->set_errcode(0);
-        rc->set_errmsg("");
-        for (string name : friends) {
-            string *str = response->add_friends();
-            *str = name;
-        }
-
-        int size = response->friends_size();
-        for (int i = 0; i < size; ++i) {
-            cout << "index:" << (i + 1) << " name:" << response->friends(i) << endl;
-        }
+        int id = request->userid();
+        GetFriendList(id, response);
 
         done->Run();
     }
 
 private:
-    vector<string> GetFriendList(int userid) {
-        cout << "do GetFriendsList service! userid:" << userid << endl;
-        vector<string> friends;
-        friends.push_back("zhangsan");
-        friends.push_back("lisi");
-        friends.push_back("wangwu");
-        return friends;
+    void GetFriendList(int id, ::fixbug::GetFriendListResponse *response) {
+        FriendOpr _friendopr;
+        vector<User> friends = _friendopr.query(id);
+        ResultCode *rc = response->mutable_result();
+        if (friends.size() != 0) {
+            rc->set_errcode(0);
+            rc->set_errmsg("获取好友列表成功");
+            for (User &user : friends) {
+                string *str = response->add_friends();
+                *str = to_string(user.getId()) + " " + user.getName() + " " + user.getState();
+            }
+        } else {
+            rc->set_errcode(1);
+            rc->set_errmsg("好友列表为空");
+        }
     }
 };
 

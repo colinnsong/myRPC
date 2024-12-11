@@ -481,33 +481,9 @@ class LoginResponse :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kFriendsFieldNumber = 2,
     kResultFieldNumber = 1,
+    kGetfriendlistresponseFieldNumber = 2,
   };
-  // repeated bytes friends = 2;
-  int friends_size() const;
-  private:
-  int _internal_friends_size() const;
-  public:
-  void clear_friends();
-  const std::string& friends(int index) const;
-  std::string* mutable_friends(int index);
-  void set_friends(int index, const std::string& value);
-  void set_friends(int index, std::string&& value);
-  void set_friends(int index, const char* value);
-  void set_friends(int index, const void* value, size_t size);
-  std::string* add_friends();
-  void add_friends(const std::string& value);
-  void add_friends(std::string&& value);
-  void add_friends(const char* value);
-  void add_friends(const void* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& friends() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_friends();
-  private:
-  const std::string& _internal_friends(int index) const;
-  std::string* _internal_add_friends();
-  public:
-
   // .fixbug.ResultCode result = 1;
   bool has_result() const;
   private:
@@ -523,13 +499,28 @@ class LoginResponse :
   ::fixbug::ResultCode* _internal_mutable_result();
   public:
 
+  // .fixbug.GetFriendListResponse getfriendlistresponse = 2;
+  bool has_getfriendlistresponse() const;
+  private:
+  bool _internal_has_getfriendlistresponse() const;
+  public:
+  void clear_getfriendlistresponse();
+  const ::fixbug::GetFriendListResponse& getfriendlistresponse() const;
+  ::fixbug::GetFriendListResponse* release_getfriendlistresponse();
+  ::fixbug::GetFriendListResponse* mutable_getfriendlistresponse();
+  void set_allocated_getfriendlistresponse(::fixbug::GetFriendListResponse* getfriendlistresponse);
+  private:
+  const ::fixbug::GetFriendListResponse& _internal_getfriendlistresponse() const;
+  ::fixbug::GetFriendListResponse* _internal_mutable_getfriendlistresponse();
+  public:
+
   // @@protoc_insertion_point(class_scope:fixbug.LoginResponse)
  private:
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> friends_;
   ::fixbug::ResultCode* result_;
+  ::fixbug::GetFriendListResponse* getfriendlistresponse_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_rpc_2eproto;
 };
@@ -1178,78 +1169,64 @@ inline void LoginResponse::set_allocated_result(::fixbug::ResultCode* result) {
   // @@protoc_insertion_point(field_set_allocated:fixbug.LoginResponse.result)
 }
 
-// repeated bytes friends = 2;
-inline int LoginResponse::_internal_friends_size() const {
-  return friends_.size();
+// .fixbug.GetFriendListResponse getfriendlistresponse = 2;
+inline bool LoginResponse::_internal_has_getfriendlistresponse() const {
+  return this != internal_default_instance() && getfriendlistresponse_ != nullptr;
 }
-inline int LoginResponse::friends_size() const {
-  return _internal_friends_size();
+inline bool LoginResponse::has_getfriendlistresponse() const {
+  return _internal_has_getfriendlistresponse();
 }
-inline void LoginResponse::clear_friends() {
-  friends_.Clear();
+inline void LoginResponse::clear_getfriendlistresponse() {
+  if (GetArenaNoVirtual() == nullptr && getfriendlistresponse_ != nullptr) {
+    delete getfriendlistresponse_;
+  }
+  getfriendlistresponse_ = nullptr;
 }
-inline std::string* LoginResponse::add_friends() {
-  // @@protoc_insertion_point(field_add_mutable:fixbug.LoginResponse.friends)
-  return _internal_add_friends();
+inline const ::fixbug::GetFriendListResponse& LoginResponse::_internal_getfriendlistresponse() const {
+  const ::fixbug::GetFriendListResponse* p = getfriendlistresponse_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::fixbug::GetFriendListResponse*>(
+      &::fixbug::_GetFriendListResponse_default_instance_);
 }
-inline const std::string& LoginResponse::_internal_friends(int index) const {
-  return friends_.Get(index);
+inline const ::fixbug::GetFriendListResponse& LoginResponse::getfriendlistresponse() const {
+  // @@protoc_insertion_point(field_get:fixbug.LoginResponse.getfriendlistresponse)
+  return _internal_getfriendlistresponse();
 }
-inline const std::string& LoginResponse::friends(int index) const {
-  // @@protoc_insertion_point(field_get:fixbug.LoginResponse.friends)
-  return _internal_friends(index);
+inline ::fixbug::GetFriendListResponse* LoginResponse::release_getfriendlistresponse() {
+  // @@protoc_insertion_point(field_release:fixbug.LoginResponse.getfriendlistresponse)
+  
+  ::fixbug::GetFriendListResponse* temp = getfriendlistresponse_;
+  getfriendlistresponse_ = nullptr;
+  return temp;
 }
-inline std::string* LoginResponse::mutable_friends(int index) {
-  // @@protoc_insertion_point(field_mutable:fixbug.LoginResponse.friends)
-  return friends_.Mutable(index);
+inline ::fixbug::GetFriendListResponse* LoginResponse::_internal_mutable_getfriendlistresponse() {
+  
+  if (getfriendlistresponse_ == nullptr) {
+    auto* p = CreateMaybeMessage<::fixbug::GetFriendListResponse>(GetArenaNoVirtual());
+    getfriendlistresponse_ = p;
+  }
+  return getfriendlistresponse_;
 }
-inline void LoginResponse::set_friends(int index, const std::string& value) {
-  // @@protoc_insertion_point(field_set:fixbug.LoginResponse.friends)
-  friends_.Mutable(index)->assign(value);
+inline ::fixbug::GetFriendListResponse* LoginResponse::mutable_getfriendlistresponse() {
+  // @@protoc_insertion_point(field_mutable:fixbug.LoginResponse.getfriendlistresponse)
+  return _internal_mutable_getfriendlistresponse();
 }
-inline void LoginResponse::set_friends(int index, std::string&& value) {
-  // @@protoc_insertion_point(field_set:fixbug.LoginResponse.friends)
-  friends_.Mutable(index)->assign(std::move(value));
-}
-inline void LoginResponse::set_friends(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  friends_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:fixbug.LoginResponse.friends)
-}
-inline void LoginResponse::set_friends(int index, const void* value, size_t size) {
-  friends_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:fixbug.LoginResponse.friends)
-}
-inline std::string* LoginResponse::_internal_add_friends() {
-  return friends_.Add();
-}
-inline void LoginResponse::add_friends(const std::string& value) {
-  friends_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:fixbug.LoginResponse.friends)
-}
-inline void LoginResponse::add_friends(std::string&& value) {
-  friends_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:fixbug.LoginResponse.friends)
-}
-inline void LoginResponse::add_friends(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  friends_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:fixbug.LoginResponse.friends)
-}
-inline void LoginResponse::add_friends(const void* value, size_t size) {
-  friends_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:fixbug.LoginResponse.friends)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-LoginResponse::friends() const {
-  // @@protoc_insertion_point(field_list:fixbug.LoginResponse.friends)
-  return friends_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-LoginResponse::mutable_friends() {
-  // @@protoc_insertion_point(field_mutable_list:fixbug.LoginResponse.friends)
-  return &friends_;
+inline void LoginResponse::set_allocated_getfriendlistresponse(::fixbug::GetFriendListResponse* getfriendlistresponse) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete getfriendlistresponse_;
+  }
+  if (getfriendlistresponse) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      getfriendlistresponse = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, getfriendlistresponse, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  getfriendlistresponse_ = getfriendlistresponse;
+  // @@protoc_insertion_point(field_set_allocated:fixbug.LoginResponse.getfriendlistresponse)
 }
 
 // -------------------------------------------------------------------
