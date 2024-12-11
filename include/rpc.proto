@@ -9,14 +9,25 @@ message ResultCode{
     bytes errmsg = 2;
 }
 
+message RegistRequest{
+    bytes username = 1;
+    bytes password = 2;
+}
+
+message RegistResponse{
+    ResultCode result = 1;
+    int32 userid = 2;
+}
+
 message LoginRequest{
     int32 userid = 1;
-    string password = 2;
+    bytes password = 2;
 }
 
 message LoginResponse{
     ResultCode result = 1;
     GetFriendListResponse getfriendlistresponse = 2;
+    GetGroupListResponse getgrouplistresponse = 3;
 }
 
 message GetFriendListRequest{
@@ -28,10 +39,21 @@ message GetFriendListResponse{
     repeated bytes friends = 2;
 }
 
-service  UserServiceRpc{
-    rpc Login(LoginRequest) returns(LoginResponse);
+message GetGroupListRequest{
+    int32 userid = 1;
 }
 
-service FriendServiceRpc{
+message GetGroupListResponse{
+    ResultCode result = 1;
+    repeated bytes groups = 2;
+}
+
+service  UserServiceRpc{
+    rpc Login(LoginRequest) returns(LoginResponse);
+    rpc Regist(RegistRequest) returns(RegistResponse);
+}
+
+service FriendAndGroupServiceRpc{
     rpc GetFriendList(GetFriendListRequest) returns(GetFriendListResponse);
+    rpc GetGroupList(GetGroupListRequest) returns(GetGroupListResponse);
 }

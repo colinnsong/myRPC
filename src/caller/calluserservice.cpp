@@ -37,6 +37,14 @@ int main(int argc, char **argv) {
                     cout << response.getfriendlistresponse().friends(i) << endl;
                 }
             }
+            if (response.getgrouplistresponse().result().errcode())
+                cout << response.getgrouplistresponse().result().errmsg() << endl;
+            else {
+                int size = response.getgrouplistresponse().groups_size();
+                for (int i = 0; i < size; ++i) {
+                    cout << response.getgrouplistresponse().groups(i) << endl;
+                }
+            }
         }
     }
 
