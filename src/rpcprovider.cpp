@@ -4,7 +4,7 @@
 #include "rpcheader.pb.h"
 using namespace fixbug;
 
-void RpcProvider::NotifyService(google::protobuf::Service *service) {
+void RpcProvider::NotifyService(google::protobuf::Service *service, bool longconn) {
     // 获取rpc服务对象的描述信息
     const google::protobuf::ServiceDescriptor *serviceDesc = service->GetDescriptor();
     // 获取rpc服务对象的名字
@@ -20,6 +20,8 @@ void RpcProvider::NotifyService(google::protobuf::Service *service) {
         LOG_INFO("notify method %s", methodName.c_str());
         _serviceMap[serviceName]._methodMap.insert({methodName, methodDesc});
     }
+
+    _islongconn = longconn;
 }
 
 void RpcProvider::Run() {
@@ -128,5 +130,7 @@ void RpcProvider::OnRpcResponse(const TcpConnectionPtr &conn, google::protobuf::
         return;
     }
     conn->send(response_str);
-    conn->shutdown(); // 模拟http短链接, 由rpc服务提供方断开连接
+    // 如果当前服务是短链接, 由rpc服务提供方断开连接
+    if (!_islongconn)
+        conn->shutdown();
 }

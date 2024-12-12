@@ -16,13 +16,14 @@ using namespace muduo::net;
 class RpcProvider {
 public:
     // 框架提供的发布rpc方法的函数接口
-    void NotifyService(google::protobuf::Service *service);
+    void NotifyService(google::protobuf::Service *service, bool longconn = false);
 
     // 启动rpc服务节点提供rpc服务
     void Run();
 
 private:
     EventLoop _loop;
+    bool _islongconn;
 
     // 单个rpc服务类型信息
     struct ServiceInfo {
