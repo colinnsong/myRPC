@@ -30,6 +30,14 @@ message LoginResponse{
     GetGroupListResponse getgrouplistresponse = 3;
 }
 
+message LoginoutRequest{
+    int32 userid = 1;
+}
+
+message LoginoutResponse{
+    ResultCode result = 1;
+}
+
 message GetFriendListRequest{
     int32 userid = 1;
 }
@@ -51,6 +59,7 @@ message GetGroupListResponse{
 service  UserServiceRpc{
     rpc Login(LoginRequest) returns(LoginResponse);
     rpc Regist(RegistRequest) returns(RegistResponse);
+    rpc Loginout(LoginoutRequest) returns(LoginoutResponse);
 }
 
 service FriendAndGroupServiceRpc{

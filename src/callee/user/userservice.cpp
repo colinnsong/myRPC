@@ -36,6 +36,17 @@ public:
         done->Run();
     }
 
+    // 重写父类UserServiceRpc的Loginout方法
+    virtual void Loginout(::google::protobuf::RpcController *controller,
+                          const ::fixbug::LoginoutRequest *request,
+                          ::fixbug::LoginoutResponse *response,
+                          ::google::protobuf::Closure *done) {
+        int id = request->userid();
+        Loginout(id, response);
+
+        done->Run();
+    }
+
 private:
     // 本地的Login方法
     void Login(int id, string pwd, ::fixbug::LoginResponse *response) {
@@ -98,7 +109,7 @@ private:
             }
         }
     }
-
+    // 本地的Regist方法
     void Regist(string name, string pwd, ::fixbug::RegistResponse *response) {
         ResultCode *rc = response->mutable_result();
         User user;
@@ -112,6 +123,21 @@ private:
         } else {
             rc->set_errcode(1);
             rc->set_errmsg("注册失败");
+        }
+    }
+    // 本地的Loginout方法
+    void Loginout(int id, ::fixbug::LoginoutResponse *response) {
+        ResultCode *rc = response->mutable_result();
+        User user;
+        user.setId(id);
+        user.setState("offline");
+        bool state = _useropr.updateState(user);
+        if (state) {
+            rc->set_errcode(0);
+            rc->set_errmsg("用户已注销");
+        } else {
+            rc->set_errcode(1);
+            rc->set_errmsg("注销失败");
         }
     }
 
