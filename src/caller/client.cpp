@@ -83,6 +83,15 @@ void doLoginResponse(RpcController &controller, LoginResponse &response) {
                     cout << response.getgrouplistresponse().groups(i) << endl;
                 }
             }
+            cout << "----------------------offmsg list----------------------" << endl;
+            if (response.getofflinemsgresponse().result().errcode())
+                cout << response.getofflinemsgresponse().result().errmsg() << endl;
+            else {
+                int size = response.getofflinemsgresponse().offlinemsg_size();
+                for (int i = 0; i < size; ++i) {
+                    cout << response.getofflinemsgresponse().offlinemsg(i) << endl;
+                }
+            }
             cout << "======================================================" << endl;
         }
         isLoginSuccess = true;

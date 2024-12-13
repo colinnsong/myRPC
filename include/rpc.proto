@@ -28,6 +28,7 @@ message LoginResponse{
     ResultCode result = 1;
     GetFriendListResponse getfriendlistresponse = 2;
     GetGroupListResponse getgrouplistresponse = 3;
+    GetOfflineMsgResponse getofflinemsgresponse = 4;
 }
 
 message LoginoutRequest{
@@ -56,6 +57,24 @@ message GetGroupListResponse{
     repeated bytes groups = 2;
 }
 
+message FriendChatRequest{
+    int32 friendid = 1;
+    bytes message = 2;
+}
+
+message FriendChatResponse{
+    ResultCode result = 1;
+}
+
+message GetOfflineMsgRequest{
+    int32 userid = 1;
+}
+
+message GetOfflineMsgResponse{
+    ResultCode result = 1;
+    repeated bytes offlinemsg = 2;
+}
+
 service  UserServiceRpc{
     rpc Login(LoginRequest) returns(LoginResponse);
     rpc Regist(RegistRequest) returns(RegistResponse);
@@ -65,4 +84,9 @@ service  UserServiceRpc{
 service FriendAndGroupServiceRpc{
     rpc GetFriendList(GetFriendListRequest) returns(GetFriendListResponse);
     rpc GetGroupList(GetGroupListRequest) returns(GetGroupListResponse);
+}
+
+service ChatServiceRpc{
+    rpc FriendChat(FriendChatRequest) returns(FriendChatResponse);
+    rpc GetOfflineMsg(GetOfflineMsgRequest) returns(GetOfflineMsgResponse);
 }

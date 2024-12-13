@@ -67,18 +67,12 @@ private:
                 rc->set_errcode(0);
                 rc->set_errmsg("登录成功");
 
-                // 调用远程GetFriendList方法的请求和响应对象声明
+                FriendAndGroupServiceRpc_Stub stub(new MyRpcChannel());
+
+                // 调用远程GetFriendList方法
                 GetFriendListRequest friend_request;
                 friend_request.set_userid(id);
                 GetFriendListResponse friend_response;
-
-                // 调用远程GetGroupList方法的请求和响应对象声明
-                GetGroupListRequest group_request;
-                group_request.set_userid(id);
-                GetGroupListResponse group_response;
-
-                // 调用远程的GetFriendList方法和GetGroupList方法
-                FriendAndGroupServiceRpc_Stub stub(new MyRpcChannel());
 
                 RpcController friend_controller;
                 stub.GetFriendList(&friend_controller, &friend_request, &friend_response, nullptr);
@@ -87,12 +81,32 @@ private:
                     *res = friend_response;
                 }
 
+                // 调用远程GetGroupList方法
+                GetGroupListRequest group_request;
+                group_request.set_userid(id);
+                GetGroupListResponse group_response;
+
                 RpcController group_controller;
                 stub.GetGroupList(&group_controller, &group_request, &group_response, nullptr);
                 if (!group_controller.Failed()) {
                     GetGroupListResponse *res2 = response->mutable_getgrouplistresponse();
                     *res2 = group_response;
                 }
+
+                ChatServiceRpc_Stub stub2(new MyRpcChannel());
+
+                // 调用远程GetOfflineMsg方法
+                GetOfflineMsgRequest offmsg_request;
+                offmsg_request.set_userid(id);
+                GetOfflineMsgResponse offmsg_response;
+
+                RpcController offmsg_controller;
+                stub2.GetOfflineMsg(&offmsg_controller, &offmsg_request, &offmsg_response, nullptr);
+                if (!offmsg_controller.Failed()) {
+                    GetOfflineMsgResponse *res3 = response->mutable_getofflinemsgresponse();
+                    *res3 = offmsg_response;
+                }
+
                 return;
             }
         } else {
